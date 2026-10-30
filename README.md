@@ -1,4 +1,4 @@
-# Lumabi Portfolio
+# Portfolio
 
 A personal portfolio website built to showcase my projects, skills, and background. 
 
