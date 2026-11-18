@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useState } from "react"
+import { useRef, useLayoutEffect, useState } from "react"
 import { motion, useScroll, useSpring, useTransform, useMotionValue, useVelocity, useAnimationFrame } from "framer-motion"
 
 interface VelocityMapping {
@@ -9,7 +9,7 @@ interface VelocityMapping {
 interface VelocityTextProps {
   children: React.ReactNode
   baseVelocity: number
-  scrollContainerRef?: React.RefObject<HTMLElement>
+  scrollContainerRef?: React.RefObject<HTMLElement | null>
   className?: string
   damping?: number
   stiffness?: number
@@ -22,7 +22,7 @@ interface VelocityTextProps {
 }
 
 interface ScrollVelocityProps {
-  scrollContainerRef?: React.RefObject<HTMLElement>
+  scrollContainerRef?: React.RefObject<HTMLElement | null>
   texts: string[]
   velocity?: number
   className?: string
@@ -53,8 +53,36 @@ function useElementWidth<T extends HTMLElement>(ref: React.RefObject<T | null>):
   return width
 }
 
-export const ScrollVelocity: React.FC<ScrollVelocityProps> = ({ scrollContainerRef, texts = [], velocity = 100, className = "", damping = 50, stiffness = 400, numCopies = 6, velocityMapping = { input: [0, 1000], output: [0, 5] }, parallaxClassName, scrollerClassName, parallaxStyle, scrollerStyle }) => {
-  function VelocityText({ children, baseVelocity = velocity, scrollContainerRef, className = "", damping, stiffness, numCopies, velocityMapping, parallaxClassName, scrollerClassName, parallaxStyle, scrollerStyle }: VelocityTextProps) {
+export const ScrollVelocity: React.FC<ScrollVelocityProps> = ({ 
+  scrollContainerRef, 
+  texts = [], 
+  velocity = 100, 
+  className = "", 
+  damping = 50, 
+  stiffness = 400, 
+  numCopies = 6, 
+  velocityMapping = { input: [0, 1000], output: [0, 5] }, 
+  parallaxClassName, 
+  scrollerClassName, 
+  parallaxStyle, 
+  scrollerStyle 
+}) => {
+  
+  function VelocityText({ 
+    children, 
+    baseVelocity = velocity, 
+    scrollContainerRef, 
+    className = "", 
+    damping, 
+    stiffness, 
+    numCopies, 
+    velocityMapping, 
+    parallaxClassName, 
+    scrollerClassName, 
+    parallaxStyle, 
+    scrollerStyle 
+  }: VelocityTextProps) {
+    
     const baseX = useMotionValue(0)
     const scrollOptions = scrollContainerRef ? { container: scrollContainerRef } : {}
     const { scrollY } = useScroll(scrollOptions)
@@ -80,7 +108,9 @@ export const ScrollVelocity: React.FC<ScrollVelocityProps> = ({ scrollContainerR
     })
 
     const directionFactor = useRef<number>(1)
-    useAnimationFrame((t, delta) => {
+    
+    // Inayos ang t at delta para iwasan ang unused variable error (TS6133)
+    useAnimationFrame((_t, delta) => {
       let moveBy = directionFactor.current * baseVelocity * (delta / 1000)
 
       if (velocityFactor.get() < 0) {
@@ -104,7 +134,10 @@ export const ScrollVelocity: React.FC<ScrollVelocityProps> = ({ scrollContainerR
 
     return (
       <div className={`${parallaxClassName} relative overflow-hidden`} style={parallaxStyle}>
-        <motion.div className={`${scrollerClassName} flex whitespace-nowrap text-center font-sans text-4xl font-bold tracking-[-0.02em] drop-shadow md:text-[5rem] md:leading-20`} style={{ x, ...scrollerStyle }}>
+        <motion.div 
+          className={`${scrollerClassName} flex whitespace-nowrap text-center font-sans text-4xl font-bold tracking-[-0.02em] drop-shadow md:text-[5rem] md:leading-20`} 
+          style={{ x, ...scrollerStyle }}
+        >
           {spans}
         </motion.div>
       </div>
@@ -114,7 +147,20 @@ export const ScrollVelocity: React.FC<ScrollVelocityProps> = ({ scrollContainerR
   return (
     <section>
       {texts.map((text: string, index: number) => (
-        <VelocityText key={index} className={className} baseVelocity={index % 2 !== 0 ? -velocity : velocity} scrollContainerRef={scrollContainerRef} damping={damping} stiffness={stiffness} numCopies={numCopies} velocityMapping={velocityMapping} parallaxClassName={parallaxClassName} scrollerClassName={scrollerClassName} parallaxStyle={parallaxStyle} scrollerStyle={scrollerStyle}>
+        <VelocityText 
+          key={index} 
+          className={className} 
+          baseVelocity={index % 2 !== 0 ? -velocity : velocity} 
+          scrollContainerRef={scrollContainerRef} 
+          damping={damping} 
+          stiffness={stiffness} 
+          numCopies={numCopies} 
+          velocityMapping={velocityMapping} 
+          parallaxClassName={parallaxClassName} 
+          scrollerClassName={scrollerClassName} 
+          parallaxStyle={parallaxStyle} 
+          scrollerStyle={scrollerStyle}
+        >
           {text}&nbsp;
         </VelocityText>
       ))}
