@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import PageLoader from "../components/PageLoader";
 import ScrollVelocity from "../components/ScrollVelocity";
 import Typewriter from "../components/Typewriter";
+import MagicCursor from "../components/MagicCursor";
 
 // --- DATA ---
 const profile = {
@@ -338,6 +339,7 @@ export default function Home() {
         <div className="absolute -bottom-[20%] left-[20%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[#c8e6c9] rounded-full mix-blend-multiply filter blur-[120px] opacity-60 animate-pulse" style={{ animationDuration: '12s', animationDelay: '4s' }}></div>
       </div>
 
+      <MagicCursor />
       <PageLoader />
 
       <div className="relative z-10">

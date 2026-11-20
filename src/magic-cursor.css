@@ -1,0 +1,42 @@
+/* magic-cursor.css */
+.mouse-sparkles-star {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.mouse-sparkles-glow-point {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99998;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+  transform: translate(-50%, -50%);
+  animation: glow-fade 75ms linear forwards;
+}
+
+@keyframes glow-fade {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+}
+
+@keyframes fall-1 {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: translate(-50%, 100px) scale(0) rotate(45deg); }
+}
+
+@keyframes fall-2 {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: translate(-50%, 100px) scale(0) rotate(-45deg); }
+}
+
+@keyframes fall-3 {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: translate(-50%, 100px) scale(0) rotate(90deg); }
+}
