@@ -1,6 +1,6 @@
 # Portfolio
 
-A personal portfolio website built to showcase my projects, skills, and background. 
+A personal portfolio website showcasing my skills, projects, and background as an aspiring Web Developer and Visual Creator. Built with React, TypeScript, and Tailwind CSS.
 
-## About
-This project serves as the foundation for my personal portfolio. It includes the initial setup for the Home, About, Projects, and Contact pages, complete with routing and a shared layout.
+## 🚀 Live Demo
+https://lumabi-portfolio.vercel.app
